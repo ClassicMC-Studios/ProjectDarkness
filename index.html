@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ProjectDarkness</title>
+        <style>
+            body{
+                background-color: rgb(0, 0, 0);
+            }
+        </style>
+    </head>
+    <body>
+        <!--
+            Images
+        -->
+        <img id="player" src="images/player.png"width="0"height="0">
+        <img id="playerR" src="images/playerRight.png"width="0"height="0">
+        <img id="sword" src="images/sword.png"width="0"height="0">
+        <img id="swordR" src="images/swordRight.png"width="0"height="0">
+        <p align="center">
+            <canvas id="myCanvas"width="720"height="480"style="border:5px solid #ffffff;"></canvas>
+        </p>
+        <!--
+            Actual game code
+        -->
+        <script>
+            var canvas = document.getElementById("myCanvas");
+            var c = canvas.getContext("2d");
+            var player = document.getElementById("player");
+            var playerR = document.getElementById("playerR");
+            var sword = document.getElementById("sword");
+            var swordR = document.getElementById("swordR");
+
+            let p = {x:100,y:100,width:50,height:70}
+            let titleY = 100
+            let project = {time:0,dir:"right",scene:0,swordActive:false};
+            let hitboxActive = false;
+            let leftKeyPresed = false;
+            let rightKeyPressed = false;
+            let upKeyPressed = false;
+            let downKeyPressed = false;
+        
+            function clear(){
+                c.fillStyle = "black";
+                c.fillRect(0,0,720,480);
+            }
+            function drawPlayer(x,y){
+                if(project.dir == "right"){
+                    c.drawImage(player,x-65,y-30,190,130);
+                }
+                else{
+                    c.drawImage(playerR,x-65,y-30,190,130);
+                }
+            }
+            function drawHitbox(){
+                c.fillStyle = "white";
+                c.fillRect(p.x,p.y,50,70);
+            }
+            function drawSword(){
+                if(project.swordActive){
+                    if(project.dir == "right"){
+                        c.drawImage(sword,p.x-40,p.y-55,190,190);
+                    }
+                    else{
+                        c.drawImage(swordR,p.x-95,p.y-55,190,190);
+                    }
+                }
+            }
+            function drawTitle(){
+                c.fillStyle = "white";
+                c.font = 'bold 48px sans serif';
+                c.fillText("ProjectDarkness",10,titleY);
+                c.fillText("Early Alpha",10+10,titleY+40);
+            }
+            function redraw(){
+                if(project.scene == 0){
+                    clear();
+                    drawTitle();
+                }
+                if(project.scene == 1){
+                    clear();
+                    if(hitboxActive){
+                        drawHitbox();
+                    }
+                    drawPlayer(p.x,p.y);
+                    drawSword();
+                }
+            }
+            /*
+            Just a whole buch of garbage to 
+            get the movement working correctly
+            */
+            function keyPressed(evt){
+                if(evt.keyCode == 37){
+                    leftKeyPressed = true;
+                }
+                if(evt.keyCode == 39){
+                    rightKeyPressed = true;
+                }
+                if(evt.keyCode == 38){
+                    upKeyPressed = true;
+                }
+                if(evt.keyCode == 40){
+                    downKeyPressed = true;
+                }
+
+            }
+            function keyReleased(evt){
+                if(evt.keyCode == 37){
+                    leftKeyPressed = false;
+                }
+                if(evt.keyCode == 39){
+                    rightKeyPressed = false;
+                }
+                if(evt.keyCode == 38){
+                    upKeyPressed = false;
+                }
+                if(evt.keyCode == 40){
+                    downKeyPressed = false;
+                }
+
+            }
+            function playerMove(){
+                if(leftKeyPressed == true){
+                    if(p.x >= -20){
+                        project.dir = "left";
+                        p.x -= 3;
+                    }
+                }
+                if(rightKeyPressed == true){
+                    if(p.x <= 685){
+                        project.dir = "right";
+                        p.x += 3;
+                    }
+                }
+                if(upKeyPressed == true){
+                    if(p.y >= -47){
+                        p.y -= 3;
+                    }
+                }
+                if(downKeyPressed == true){
+                    if(p.y <= 406){
+                        p.y += 3;
+                    }
+                }
+            }
+            document.addEventListener('keydown',function (evt){
+                if(event.keyCode == 68){
+                    alert(p.x+"<x  y>"+p.y);
+                }
+                if(event.keyCode == 72){
+                    hitboxActive = true;
+                    project.swordActive = true;
+                }
+                if(event.keyCode == 32){
+                    if(project.scene == 0){
+                        project.scene = 1;
+                    }
+                }
+            });
+
+            //Main game loop
+            window.main = function (){
+                window.requestAnimationFrame( main );
+                redraw();
+                document.addEventListener('keydown',keyPressed);
+                document.addEventListener('keyup',keyReleased);
+                titleY += Math.sin(0+(project.time*-0.5)*0.5);
+                project.time += 0.5;
+                playerMove();
+            }
+            main();
+        </script>    
+    </body>
+</html>

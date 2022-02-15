@@ -4,5 +4,5 @@ A html/js game
 Made by, ClassicMC 
 Some ideas and insparation from austinis2
 # Images
-![screenshot](screenshots/Screenshot 2022-02-14 9.46.40 PM.png)
+![screenshot](screenshots/a.png)
 

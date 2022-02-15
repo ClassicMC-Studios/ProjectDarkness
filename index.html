@@ -16,6 +16,8 @@
         <img id="playerR" src="images/playerRight.png"width="0"height="0">
         <img id="sword" src="images/sword.png"width="0"height="0">
         <img id="swordR" src="images/swordRight.png"width="0"height="0">
+        <img id="bg" src="images/bg.png"width="0"height="0">
+        <img id="title" src="images/title.png"width="0"height="0">
         <p align="center">
             <canvas id="myCanvas"width="720"height="480"style="border:5px solid #ffffff;"></canvas>
         </p>
@@ -29,10 +31,12 @@
             var playerR = document.getElementById("playerR");
             var sword = document.getElementById("sword");
             var swordR = document.getElementById("swordR");
+            var bg = document.getElementById("bg");
+            var titleIMG = document.getElementById("title");
 
-            let p = {x:100,y:100,width:50,height:70}
-            let titleY = 100
-            let project = {time:0,dir:"right",scene:0,swordActive:false};
+            let p = {x:100,y:100,width:50,height:70};
+            let swordPOS = {x:370,y:250,width:35,height:60};
+            let project = {time:0,dir:"right",scene:0,swordActive:false,titleY:100};
             let hitboxActive = false;
             let leftKeyPresed = false;
             let rightKeyPressed = false;
@@ -55,6 +59,10 @@
                 c.fillStyle = "white";
                 c.fillRect(p.x,p.y,50,70);
             }
+            function fontInit(){
+                c.fillStyle = "white";
+                c.font = 'bold 12px sans serif';
+            }
             function drawSword(){
                 if(project.swordActive){
                     if(project.dir == "right"){
@@ -64,16 +72,19 @@
                         c.drawImage(swordR,p.x-95,p.y-55,190,190);
                     }
                 }
+                else{
+                    c.drawImage(swordR,300,200,190,190);
+                }
             }
             function drawTitle(){
-                c.fillStyle = "white";
-                c.font = 'bold 48px sans serif';
-                c.fillText("ProjectDarkness",10,titleY);
-                c.fillText("Early Alpha",10+10,titleY+40);
+                c.drawImage(titleIMG,20,project.titleY-140,410,250);
+                fontInit();
+                c.fillText("(c)ClassicMC 2022",600,460);
             }
             function redraw(){
                 if(project.scene == 0){
                     clear();
+                    c.drawImage(bg,0,0,720,480);
                     drawTitle();
                 }
                 if(project.scene == 1){
@@ -85,6 +96,14 @@
                     drawSword();
                 }
             }
+            function checkCollisions(x,y,width,height){
+                if(x < p.x + p.width &&
+                x + width > p.x &&
+                y < p.y + p.height &&
+                y + height > p.y){
+                    project.swordActive = true;
+                }  
+            }   
             /*
             Just a whole buch of garbage to 
             get the movement working correctly
@@ -149,7 +168,6 @@
                 }
                 if(event.keyCode == 72){
                     hitboxActive = true;
-                    project.swordActive = true;
                 }
                 if(event.keyCode == 32){
                     if(project.scene == 0){
@@ -164,9 +182,10 @@
                 redraw();
                 document.addEventListener('keydown',keyPressed);
                 document.addEventListener('keyup',keyReleased);
-                titleY += Math.sin(0+(project.time*-0.5)*0.5);
+                project.titleY += Math.sin(0+(project.time*-0.5)*0.5);
                 project.time += 0.5;
                 playerMove();
+                checkCollisions(swordPOS.x,swordPOS.y,swordPOS.width,swordPOS.height);
             }
             main();
         </script>    

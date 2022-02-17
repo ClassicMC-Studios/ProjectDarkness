@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>ProjectDarkness</title>
+        <title>ProjectDarkness EarlyAlpha</title>
         <style>
             body{
                 background-color: rgb(0, 0, 0);
@@ -28,7 +28,6 @@
         </p>
         <!--Actual game code-->
         <script>
-            // TODO companion
             var canvas = document.getElementById("myCanvas");
             var c = canvas.getContext("2d");
             var bg = document.getElementById("bg");
@@ -66,13 +65,21 @@
                 c.fillStyle = "white";
                 c.fillRect(x,y,w,h);
             }
-            function text(text){
+            function text(text,x,y){
+                c.globalAlpha = 0.3;
+                c.fillStyle = "white";
+                c.font = 'bold 24px sans serif';
+                c.fillText(text,x,y);
+                c.globalAlpha = 1;
+            }
+            function drawScore(){
+                text("Score:",20,30);
+                text(project.coins,95,31);
+            }
+            function drawTxtBox(){
                 c.globalAlpha = 0.3;
                 c.fillStyle = "black";
                 c.fillRect(0,0,canvas.width,60);
-                c.fillStyle = "white";
-                c.font = 'bold 24px sans serif';
-                c.fillText(text,canvas.width/2-100,30);
                 c.globalAlpha = 1;
             }
             function fontInit(){
@@ -107,6 +114,13 @@
                 }
                 c.globalAlpha = 1;
             }
+            function levelReset(){
+                p.x = 100;
+                p.y = 100;
+                project.collected = false;
+                project.cc =false;
+                project.ogcoins = project.coins;
+            }
             function redraw(){
                 if(project.scene == 0){
                     clear();
@@ -120,11 +134,22 @@
                     drawSword();
                     drawSL("rect",680,0);
                     newCoin(10,420);
-                    text("Get your sword");
+                    drawTxtBox();
+                    text("Get your sword",canvas.width/2-100,30);
+                    drawScore();
                 }
                 if(project.scene == -1){
                     clear();
                     c.drawImage(info,0,0,720,480);
+                }
+                if(project.scene == 2){
+                    clear();
+                    drawPlayer(p.x,p.y);
+                    drawSword();
+                    drawSL("rect",670,0);
+                    newCoin(200,200);
+                    drawTxtBox();
+                    drawScore();
                 }
             }
             function checkCollisions(x,y,width,height){
@@ -178,6 +203,12 @@
                         project.dir = "right";
                         p.x += 3;
                     }
+                    else{
+                        if(project.scene == 1 && project.swordActive ==true){
+                            levelReset();
+                            project.scene = 2;
+                        }
+                    }
                 }
                 if(upKeyPressed == true){
                     if(p.y >= -14){
@@ -204,7 +235,7 @@
                         project.scene = -1;
                     }
                     else{
-                        alert("Coins:"+project.coins);
+                        alert(project.ogcoins+" "+project.coins);
                     }
                 }
             });
@@ -231,7 +262,6 @@
                     }
                 }
             }
-            project.ogcoins = project.coins;
             main();
         </script>    
     </body>

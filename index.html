@@ -20,23 +20,25 @@
         <img id="gamebg" src="images/gameBG.png"width="0"height="0">
         <img id="title" src="images/title.png"width="0"height="0">
         <img id="info" src="images/infoPAGE.png"width="0"height="0">
+        <img id="coin" src="images/coin.png"width="0"height="0">
+        <img id="light" src="images/light.png"width="0"height="0">
+        <img id="lightC" src="images/lightC.png"width="0"height="0">
         <p align="center">
             <canvas id="myCanvas"width="720"height="480"style="border:5px solid #ffffff;"></canvas>
         </p>
-        <!--
-            Actual game code
-        -->
+        <!--Actual game code-->
         <script>
+            // TODO companion
             var canvas = document.getElementById("myCanvas");
             var c = canvas.getContext("2d");
             var bg = document.getElementById("bg");
             var titleIMG = document.getElementById("title");
-            var images = {player:document.getElementById("player"),playerR:document.getElementById("playerR"),sword:document.getElementById("sword"),swordR:document.getElementById("swordR"),info:document.getElementById("info"),gbg:document.getElementById("gamebg")};
+            var images = {player:document.getElementById("player"),playerR:document.getElementById("playerR"),sword:document.getElementById("sword"),swordR:document.getElementById("swordR"),info:document.getElementById("info"),gbg:document.getElementById("gamebg"),coin:document.getElementById("coin"),light:document.getElementById("light"),lightC:document.getElementById("lightC")};
 
             let p = {x:100,y:100,width:50,height:70};
             let swordPOS = {x:370,y:250,width:35,height:60};
-            let project = {time:0,dir:"right",scene:0,swordActive:false,titleY:100};
-            let hitboxActive = false;
+            let project = {time:0,dir:"right",scene:0,swordActive:false,titleY:100,collected:false,coinX:10,coinY:420,cc:false,coins:0,ogcoins:0};
+
             let leftKeyPresed = false;
             let rightKeyPressed = false;
             let upKeyPressed = false;
@@ -53,16 +55,25 @@
                     c.drawImage(images.playerR,x-65,y-30,190,130);
                 }
             }
-            function drawHitbox(){
+            function newCoin(x,y){
+                project.coinX = x;
+                project.coinY = y;
+                if(!project.cc){
+                    c.drawImage(images.coin,x,y,30,60);
+                }
+            }
+            function drawHitbox(x,y,w,h){
                 c.fillStyle = "white";
-                c.fillRect(p.x,p.y,50,70);
+                c.fillRect(x,y,w,h);
             }
             function text(text){
+                c.globalAlpha = 0.3;
                 c.fillStyle = "black";
                 c.fillRect(0,0,canvas.width,60);
                 c.fillStyle = "white";
                 c.font = 'bold 24px sans serif';
                 c.fillText(text,canvas.width/2-100,30);
+                c.globalAlpha = 1;
             }
             function fontInit(){
                 c.fillStyle = "white";
@@ -86,20 +97,30 @@
                 fontInit();
                 c.fillText("(c)ClassicMC 2022 ,\"i\"for info",545,470);
             }
+            function drawSL(type,x,y,w,h){
+                c.globalAlpha = 0.3;
+                if(type == "rect"){
+                    c.drawImage(images.light,x,y,50,480);
+                }
+                else{
+                    c.drawImage(images.lightC,x,y,w,h);
+                }
+                c.globalAlpha = 1;
+            }
             function redraw(){
                 if(project.scene == 0){
                     clear();
                     c.drawImage(bg,0,0,720,480);
+                    drawSL("circle",480,440,300,50);
                     drawTitle();
                 }
                 if(project.scene == 1){
                     clear();
-                    if(hitboxActive){
-                        drawHitbox();
-                    }
                     drawPlayer(p.x,p.y);
                     drawSword();
-                    text("get your sword");
+                    drawSL("rect",680,0);
+                    newCoin(10,420);
+                    text("Get your sword");
                 }
                 if(project.scene == -1){
                     clear();
@@ -111,7 +132,7 @@
                 x + width > p.x &&
                 y < p.y + p.height &&
                 y + height > p.y){
-                    project.swordActive = true;
+                    project.collected = true;
                 }  
             }   
             //Just a whole buch of garbage to get the movement working correctly
@@ -182,6 +203,9 @@
                     if(project.scene == 0){
                         project.scene = -1;
                     }
+                    else{
+                        alert("Coins:"+project.coins);
+                    }
                 }
             });
             //Main game loop
@@ -194,7 +218,20 @@
                 project.time += 0.5;
                 playerMove();
                 checkCollisions(swordPOS.x,swordPOS.y,swordPOS.width,swordPOS.height);
+                if(project.collected){
+                    project.collected = false;
+                    project.swordActive = true;
+                }
+                checkCollisions(project.coinX,project.coinY,30,60);
+                if(project.collected){
+                    project.collected = false;
+                    project.cc = true;
+                    if(project.coins <= project.ogcoins){
+                        project.coins ++;
+                    }
+                }
             }
+            project.ogcoins = project.coins;
             main();
         </script>    
     </body>

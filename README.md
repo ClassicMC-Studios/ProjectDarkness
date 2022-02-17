@@ -4,5 +4,5 @@ A html/js game
 Made by, ClassicMC 
 Some ideas and insparation from austinis2
 # Images
-![screenshot](screenshots/a.png)
+![screenshot](screenshots/b.png)
 

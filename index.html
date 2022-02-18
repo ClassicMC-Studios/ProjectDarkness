@@ -23,6 +23,7 @@
         <img id="coin" src="images/coin.png"width="0"height="0">
         <img id="light" src="images/light.png"width="0"height="0">
         <img id="lightC" src="images/lightC.png"width="0"height="0">
+        <img id="help" src="images/helper.png"width="0"height="0">
         <p align="center">
             <canvas id="myCanvas"width="720"height="480"style="border:5px solid #ffffff;"></canvas>
         </p>
@@ -33,10 +34,12 @@
             var bg = document.getElementById("bg");
             var titleIMG = document.getElementById("title");
             var images = {player:document.getElementById("player"),playerR:document.getElementById("playerR"),sword:document.getElementById("sword"),swordR:document.getElementById("swordR"),info:document.getElementById("info"),gbg:document.getElementById("gamebg"),coin:document.getElementById("coin"),light:document.getElementById("light"),lightC:document.getElementById("lightC")};
+            var images2 = {help:document.getElementById("help")};
 
             let p = {x:100,y:100,width:50,height:70};
             let swordPOS = {x:370,y:250,width:35,height:60};
-            let project = {time:0,dir:"right",scene:0,swordActive:false,titleY:100,collected:false,coinX:10,coinY:420,cc:false,coins:0,ogcoins:0};
+            let project = {time:0,dir:"right",scene:0,swordActive:false,titleY:100,collected:false,
+            coinX:10,coinY:420,cc:false,coins:0,ogcoins:0,helpX:300,helpY:300,triggerText:false};
 
             let leftKeyPresed = false;
             let rightKeyPressed = false;
@@ -75,6 +78,9 @@
             function drawScore(){
                 text("Score:",20,30);
                 text(project.coins,95,31);
+            }
+            function drawHelper(){
+                c.drawImage(images2.help,300,300,230,150);
             }
             function drawTxtBox(){
                 c.globalAlpha = 0.3;
@@ -135,7 +141,7 @@
                     drawSL("rect",680,0);
                     newCoin(10,420);
                     drawTxtBox();
-                    text("Get your sword",canvas.width/2-100,30);
+                    text("Get your sword",canvas.width/2-160,30);
                     drawScore();
                 }
                 if(project.scene == -1){
@@ -146,9 +152,13 @@
                     clear();
                     drawPlayer(p.x,p.y);
                     drawSword();
-                    drawSL("rect",670,0);
+                    drawSL("eclipse",560,320,300,300);
+                    drawHelper();
                     newCoin(200,200);
                     drawTxtBox();
+                    if(project.triggerText){
+                        text("There are hidden coins.",canvas.width/2-100,30)
+                    }
                     drawScore();
                 }
             }
@@ -236,6 +246,7 @@
                     }
                     else{
                         alert(project.ogcoins+" "+project.coins);
+                        alert(p.x+"<X Y>"+p.y)
                     }
                 }
             });
@@ -260,6 +271,11 @@
                     if(project.coins <= project.ogcoins){
                         project.coins ++;
                     }
+                }
+                checkCollisions(project.helpX+90,project.helpY+40,70,50);
+                if(project.collected&&project.scene == 2){
+                    project.collected = false;
+                    project.triggerText = true;
                 }
             }
             main();

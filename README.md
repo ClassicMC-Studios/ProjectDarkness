@@ -5,7 +5,7 @@ About the adventue of a character with the constructs of antimatter causing prob
 Made by, ClassicMC 
 Some help from austinis2
 # Images
-![screenshot](screenshots/asdf.png)
+![screenshot](screenshots/infoPAGE.png)
 # Running ProjectDarkness 
 Once the game is fully finished the game will be availabile on gamejolt
 the full version of this game will be availabile on github* maybe.

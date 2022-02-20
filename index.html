@@ -37,35 +37,41 @@
             var images2 = {help:document.getElementById("help"),tree:document.getElementById("tree"),
             antimatter:document.getElementById("antimatter")};
 
-            let p = {x:100,y:100,width:50,height:70};
-            let swordPOS = {x:370,y:250,width:35,height:60};
+            let p = {x:720/2-50,y:480/2-50,width:50,height:70};
+            let swordPOS = {x:370,y:280,width:35,height:60};
             let project = {time:0,dir:"right",scene:0,swordActive:false,titleY:100,collected:false,
-            coinX:10,coinY:420,cc:false,coins:0,ogcoins:0,helpX:300,helpY:300,triggerText:false,
-            antiX:0,antiY:0,hitbox:false};
+            helpX:300,helpY:300,triggerText:false,
+            antiX:0,antiY:0,hitbox:false,amount:12};
+            const treePOS = [];
 
             let leftKeyPresed = false;
             let rightKeyPressed = false;
             let upKeyPressed = false;
             let downKeyPressed = false;
-
+            
             class Tree{
                 constructor(x,y){
-                    c.globalAlpha = "0.3";
-                    c.drawImage(images2.tree,x,y,240,210);
-                    c.globalAlpha = "1";
+                    drawTree(swordPOS.x-x,swordPOS.y-y)
                 }
             }
-            class Anti{
-                constructor(x,y){
-                    project.antiX =x;
-                    project.antiY =y;
-                    drawSL("circle",x,y,60,60);
-                    c.drawImage(images2.antimatter,x+5,y+5,50,50);
-                }
-            }
-        
             function clear(){
                 c.drawImage(images.gbg,0,0,720,480);
+            }
+            function generateTree(){
+                for (let step = 0; step < 2; step++) {
+                    treePOS.push(getRandomInt(800))
+                    treePOS.push(getRandomInt(500))
+                }
+                let generate = 0;
+                let generateTwo =1;
+                for (let step = 0; step < project.amount; step++) {
+                    new Tree(treePOS[generate],treePOS[generateTwo]);
+                    generate ++;
+                    generateTwo ++;
+                }
+            }
+            function getRandomInt(max) {
+              return Math.floor(Math.random() * max);
             }
             function drawPlayer(x,y){
                 if(project.dir == "right"){
@@ -73,13 +79,6 @@
                 }
                 else{
                     c.drawImage(images.playerR,x-65,y-30,190,130);
-                }
-            }
-            function newCoin(x,y){
-                project.coinX = x;
-                project.coinY = y;
-                if(!project.cc){
-                    c.drawImage(images.coin,x,y,30,60);
                 }
             }
             function drawHitbox(x,y,w,h){
@@ -91,7 +90,6 @@
                     drawHitbox(swordPOS.x,swordPOS.y,swordPOS.width,swordPOS.height);
                     drawHitbox(p.x,p.y,p.width,p.height);
                     drawHitbox(project.helpX+90,project.helpY+40,70,50);
-                    drawHitbox(project.coinX,project.coinY,30,60);
                     drawHitbox(project.antiX+10,project.antiY+10,20,20);
                 }
             }
@@ -101,10 +99,6 @@
                 c.font = 'bold 24px sans serif';
                 c.fillText(text,x,y);
                 c.globalAlpha = 1;
-            }
-            function drawScore(){
-                text("Score:",20,30);
-                text(project.coins,95,31);
             }
             function drawHelper(x,y){
                 project.helpX = x;
@@ -131,7 +125,7 @@
                     }
                 }
                 else{
-                    c.drawImage(images.swordR,300,200,190,190);
+                    c.drawImage(images.swordR,swordPOS.x-70,swordPOS.y-50,190,190);
                 }
             }
             function drawTitle(){
@@ -149,13 +143,10 @@
                 }
                 c.globalAlpha = 1;
             }
-            function levelReset(){
-                p.x = 100;
-                p.y = 100;
-                project.collected = false;
-                project.cc =false;
-                project.triggerText = false;
-                project.ogcoins = project.coins;
+            function drawTree(x,y){
+                c.globalAlpha = "0.3";
+                c.drawImage(images2.tree,x,y,240,210);
+                c.globalAlpha = "1";
             }
             function redraw(){
                 if(project.scene == 0){
@@ -169,46 +160,12 @@
                     drawHBS();
                     drawPlayer(p.x,p.y);
                     drawSword();
-                    drawSL("rect",680,0);
-                    newCoin(10,420);
+                    generateTree();
                     drawTxtBox();
-                    text("Get your sword",canvas.width/2-100,30);
-                    drawScore();
                 }
                 if(project.scene == -1){
                     clear();
                     c.drawImage(info,0,0,720,480);
-                }
-                if(project.scene == 2){
-                    clear();
-                    drawHBS();
-                    drawPlayer(p.x,p.y);
-                    drawSword();
-                    treee = new Tree(300,100);
-                    treeee = new Tree(400,150);
-                    treeeee = new Tree(400,50);
-                    drawSL("eclipse",560,320,300,300);
-                    drawHelper(300,300);
-                    newCoin(200,200);
-                    drawTxtBox();
-                    if(project.triggerText){
-                        text("There are hidden coins.",canvas.width/2-150,30)
-                    }
-                    drawScore();
-                }
-                if(project.scene == 3){
-                    clear();
-                    drawHBS();
-                    anits = new Anti(400,200);
-                    newCoin(10,420);
-                    drawPlayer(p.x,p.y);
-                    drawSword();
-                    drawHelper(100,330);
-                    drawTxtBox();
-                    if(project.triggerText){
-                        text("Watch out for the antimatter",canvas.width/2-150,30);
-                    }
-                    drawScore();
                 }
             }
             function checkCollisions(x,y,width,height){
@@ -252,40 +209,18 @@
             }
             function playerMove(){
                 if(leftKeyPressed == true){
-                    if(p.x >= -8){
-                        project.dir = "left";
-                        p.x -= 3;
-                    }
+                   project.dir = "left";
+                   swordPOS.x += 3;
                 }
                 if(rightKeyPressed == true){
-                    if(p.x <= 683){
-                        project.dir = "right";
-                        p.x += 3;
-                    }
-                    else{
-                        if(project.scene == 1 && project.swordActive ==true){
-                            levelReset();
-                            project.scene = 2;
-                        }
-                    }
+                    project.dir = "right";
+                    swordPOS.x -= 3;
                 }
                 if(upKeyPressed == true){
-                    if(p.y >= -14){
-                        p.y -= 3;
-                    }
+                    swordPOS.y += 3;
                 }
                 if(downKeyPressed == true){
-                    if(p.y <= 406){
-                        p.y += 3;
-                    }
-                }
-                if(p.x == 685){
-                    if(p.y == 409){
-                        if(project.scene == 2){
-                            levelReset();
-                            project.scene = 3;
-                        }
-                    }
+                    swordPOS.y -= 3;
                 }
             }
             document.addEventListener('keydown',function (evt){
@@ -302,10 +237,11 @@
                         project.scene = -1;
                     }
                     else{
-                        alert(project.ogcoins+" "+project.coins);
                         alert(p.x+"<X Y>"+p.y);
                         alert(project.helpX+" "+project.helpY);
                         alert("TriggerText"+project.triggerText);
+                        alert(treePOS);
+                        alert(swordPOS.x+"XX  YY"+swordPOS.y);
                     }
                 }
                 if(event.keyCode == 68){
@@ -330,34 +266,6 @@
                 if(project.collected){
                     project.collected = false;
                     project.swordActive = true;
-                }
-                checkCollisions(project.coinX,project.coinY,30,60);
-                if(project.collected){
-                    project.collected = false;
-                    project.cc = true;
-                    if(project.coins <= project.ogcoins){
-                        project.coins ++;
-                    }
-                }
-                if(project.scene == 2||project.scene == 3){
-                    checkCollisions(project.helpX+90,project.helpY+40,70,50);
-                    if(project.collected){
-                        project.collected = false;
-                        project.triggerText = true;
-                    }
-                }
-                if(project.scene == 3){
-                    checkCollisions(project.antiX+10,project.antiY+10,20,20);
-                    if(project.collected){
-                        project.collected = false;
-                        project.scene = 1
-                        project.coins = 0;
-                        redraw();
-                        project.swordActive = false;
-                        swordPOS.x = 370;
-                        swordPOS.y = 250;
-                        levelReset();
-                    }
                 }
             }
             main();

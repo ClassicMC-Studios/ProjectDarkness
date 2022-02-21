@@ -54,8 +54,23 @@
                     drawTree(swordPOS.x-x,swordPOS.y-y)
                 }
             }
+            class Anti{
+                constructor(x,y){
+                    c.drawImage(images2.antimatter,swordPOS.x-x,swordPOS.y-y);
+                }
+            }
             function clear(){
-                c.drawImage(images.gbg,0,0,720,480);
+                c.fillStyle = "black";
+                c.fillRect(0,0,720,480);
+                c.drawImage(images.gbg,swordPOS.x-370,swordPOS.y-280+478,720,480);
+                c.drawImage(images.gbg,swordPOS.x-370-718,swordPOS.y-280+478,720,480);
+                c.drawImage(images.gbg,swordPOS.x-370+718,swordPOS.y-280+478,720,480);
+                c.drawImage(images.gbg,swordPOS.x-370,swordPOS.y-280,720,480);
+                c.drawImage(images.gbg,swordPOS.x-370,swordPOS.y-280-478,720,480);
+                c.drawImage(images.gbg,swordPOS.x-370-718,swordPOS.y-280,720,480);
+                c.drawImage(images.gbg,swordPOS.x-370-718,swordPOS.y-280-478,720,480);
+                c.drawImage(images.gbg,swordPOS.x-370+719,swordPOS.y-280,720,480);
+                c.drawImage(images.gbg,swordPOS.x-370+719,swordPOS.y-280-478,720,480);
             }
             function generateTree(){
                 for (let step = 0; step < 2; step++) {
@@ -89,8 +104,6 @@
                 if(project.hitbox){
                     drawHitbox(swordPOS.x,swordPOS.y,swordPOS.width,swordPOS.height);
                     drawHitbox(p.x,p.y,p.width,p.height);
-                    drawHitbox(project.helpX+90,project.helpY+40,70,50);
-                    drawHitbox(project.antiX+10,project.antiY+10,20,20);
                 }
             }
             function text(text,x,y){
@@ -209,18 +222,26 @@
             }
             function playerMove(){
                 if(leftKeyPressed == true){
-                   project.dir = "left";
-                   swordPOS.x += 3;
+                    if(swordPOS.x <= 1054){
+                        project.dir = "left";
+                        swordPOS.x += 3;
+                    }
                 }
                 if(rightKeyPressed == true){
-                    project.dir = "right";
-                    swordPOS.x -= 3;
+                    if(swordPOS.x >= -2){
+                        project.dir = "right";
+                        swordPOS.x -= 3;
+                    }
                 }
                 if(upKeyPressed == true){
-                    swordPOS.y += 3;
+                    if(swordPOS.y <= 724){
+                        swordPOS.y += 3;
+                    }
                 }
                 if(downKeyPressed == true){
-                    swordPOS.y -= 3;
+                    if(swordPOS.y >= -65){
+                        swordPOS.y -= 3;
+                    }
                 }
             }
             document.addEventListener('keydown',function (evt){

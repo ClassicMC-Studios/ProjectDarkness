@@ -41,8 +41,9 @@
             let swordPOS = {x:370,y:280,width:35,height:60};
             let project = {time:0,dir:"right",scene:0,swordActive:false,titleY:100,collected:false,
             helpX:300,helpY:300,triggerText:false,
-            antiX:0,antiY:0,hitbox:false,amount:12};
+            antiX:0,antiY:0,hitbox:false,amount:12,antiAmount:4,tX:190,tY:100,tYP:0.05};
             const treePOS = [];
+            const antiPOS = [];
 
             let leftKeyPresed = false;
             let rightKeyPressed = false;
@@ -56,7 +57,7 @@
             }
             class Anti{
                 constructor(x,y){
-                    c.drawImage(images2.antimatter,swordPOS.x-x,swordPOS.y-y);
+                    c.drawImage(images2.antimatter,swordPOS.x-x,swordPOS.y-y,30,30);
                 }
             }
             function clear(){
@@ -85,6 +86,19 @@
                     generateTwo ++;
                 }
             }
+            function generateAnti(){
+                for (let step = 0; step < 2; step++) {
+                    antiPOS.push(getRandomInt(800))
+                    antiPOS.push(getRandomInt(500))
+                }
+                let generate = 0;
+                let generateTwo =1;
+                for (let step = 0; step < project.antiAmount; step++) {
+                    new Anti(antiPOS[generate],antiPOS[generateTwo]);
+                    generate ++;
+                    generateTwo ++;
+                }
+            }
             function getRandomInt(max) {
               return Math.floor(Math.random() * max);
             }
@@ -104,6 +118,10 @@
                 if(project.hitbox){
                     drawHitbox(swordPOS.x,swordPOS.y,swordPOS.width,swordPOS.height);
                     drawHitbox(p.x,p.y,p.width,p.height);
+                    drawHitbox(swordPOS.x-antiPOS[0],swordPOS.y-antiPOS[1],30,30);
+                    //drawHitbox(swordPOS.x-antiPOS[2],swordPOS.y-antiPOS[3],30,30);
+                    //drawHitbox(swordPOS.x-antiPOS[4],swordPOS.y-antiPOS[5],30,30);
+                    //drawHitbox(swordPOS.x-antiPOS[6],swordPOS.y-antiPOS[7],30,30);
                 }
             }
             function text(text,x,y){
@@ -174,6 +192,7 @@
                     drawPlayer(p.x,p.y);
                     drawSword();
                     generateTree();
+                    generateAnti();
                     drawTxtBox();
                 }
                 if(project.scene == -1){

@@ -13,6 +13,7 @@ var canvas = document.getElementById("myCanvas");
             antiX:0,antiY:0,hitbox:false,amount:12,antiAmount:4,tX:190,tY:100,tYP:0.05};
             const treePOS = [];
             const antiPOS = [];
+            const helperPOS = [getRandomInt(800),getRandomInt(500)];
 
             let leftKeyPresed = false;
             let rightKeyPressed = false;
@@ -85,6 +86,7 @@ var canvas = document.getElementById("myCanvas");
                     c.globalAlpha = 0.3;
                     drawHitbox(swordPOS.x,swordPOS.y,swordPOS.width,swordPOS.height);
                     drawHitbox(p.x,p.y,p.width,p.height);
+                    drawHitbox(swordPOS.x-helperPOS[0]+80,swordPOS.y-helperPOS[1]+50,90,50);
                     //Anti hitboxes
                     drawHitbox(swordPOS.x-antiPOS[0],swordPOS.y-antiPOS[1],30,30);
                     drawHitbox(swordPOS.x-antiPOS[2],swordPOS.y-antiPOS[3],30,30);
@@ -158,6 +160,7 @@ var canvas = document.getElementById("myCanvas");
                 if(project.scene == 1){
                     clear();
                     drawHBS();
+                    drawHelper(swordPOS.x-helperPOS[0],swordPOS.y-helperPOS[1]);
                     drawPlayer(p.x,p.y);
                     drawSword();
                     generateTree();
@@ -277,10 +280,14 @@ var canvas = document.getElementById("myCanvas");
                     project.swordActive = true;
                 }
                 //TODO debug anti collisions
-                //checkCollisions(swordPOS.x-antiPOS[0],swordPOS.y-antiPOS[1],30,30);
-                //if(collected){
-                    //project.collected = false;
-                    //alert("I be dead tho");
-                //}
+                checkCollisions(swordPOS.x-helperPOS[0]+80,swordPOS.y-helperPOS[1]+50,90,50);
+                if(project.collected){
+                    project.collected = false;
+                }
+                checkCollisions(swordPOS.x-antiPOS[0],swordPOS.y-antiPOS[1],30,30);
+                if(project.collected){
+                    project.collected = false;
+                }
+
             }
             main();

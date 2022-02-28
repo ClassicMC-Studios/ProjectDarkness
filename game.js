@@ -60,13 +60,10 @@ var canvas = document.getElementById("myCanvas");
                     antiPOS.push(getRandomInt(800))
                     antiPOS.push(getRandomInt(500))
                 }
-                let generate = 0;
-                let generateTwo =1;
-                for (let step = 0; step < project.antiAmount; step++) {
-                    new Anti(antiPOS[generate],antiPOS[generateTwo]);
-                    generate ++;
-                    generateTwo ++;
-                }
+                new Anti(antiPOS[0],antiPOS[1]);
+                new Anti(antiPOS[2],antiPOS[3]);
+                new Anti(antiPOS[4],antiPOS[5]);
+                new Anti(antiPOS[6],antiPOS[7]);
             }
             function getRandomInt(max) {
               return Math.floor(Math.random() * max);
@@ -85,12 +82,15 @@ var canvas = document.getElementById("myCanvas");
             }
             function drawHBS(){
                 if(project.hitbox){
+                    c.globalAlpha = 0.3;
                     drawHitbox(swordPOS.x,swordPOS.y,swordPOS.width,swordPOS.height);
                     drawHitbox(p.x,p.y,p.width,p.height);
+                    //Anti hitboxes
                     drawHitbox(swordPOS.x-antiPOS[0],swordPOS.y-antiPOS[1],30,30);
-                    //drawHitbox(swordPOS.x-antiPOS[2],swordPOS.y-antiPOS[3],30,30);
-                    //drawHitbox(swordPOS.x-antiPOS[4],swordPOS.y-antiPOS[5],30,30);
-                    //drawHitbox(swordPOS.x-antiPOS[6],swordPOS.y-antiPOS[7],30,30);
+                    drawHitbox(swordPOS.x-antiPOS[2],swordPOS.y-antiPOS[3],30,30);
+                    drawHitbox(swordPOS.x-antiPOS[4],swordPOS.y-antiPOS[5],30,30);
+                    drawHitbox(swordPOS.x-antiPOS[6],swordPOS.y-antiPOS[7],30,30);
+                    c.globalAlpha = 1;
                 }
             }
             function text(text,x,y){
@@ -276,5 +276,11 @@ var canvas = document.getElementById("myCanvas");
                     project.collected = false;
                     project.swordActive = true;
                 }
+                //TODO debug anti collisions
+                //checkCollisions(swordPOS.x-antiPOS[0],swordPOS.y-antiPOS[1],30,30);
+                //if(collected){
+                    //project.collected = false;
+                    //alert("I be dead tho");
+                //}
             }
             main();

@@ -1,5 +1,5 @@
 # ProjectDarkness
-A html/js game
+A html canvas/js game
 About the adventue of a character with the constructs of antimatter causing problems
 # Extra info
 Made by, ClassicMC 

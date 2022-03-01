@@ -250,6 +250,13 @@ document.addEventListener('keydown',function (evt){
         else if(project.scene == -1){
             project.scene =0;
         }
+        if(project.scene == 1){
+            checkCollisions(swordPOS.x-helperPOS[0]+80,swordPOS.y-helperPOS[1]+50,90,50);
+            if(project.collected){
+                project.collected = false;
+                alert("Test");
+            }
+        }
     }
     if(event.keyCode == 73){
         if(project.scene == 0){
@@ -285,11 +292,6 @@ window.main = function (){
     if(project.collected){
         project.collected = false;
         project.swordActive = true;
-    }
-    //TODO add 3 more anti collisions
-    checkCollisions(swordPOS.x-helperPOS[0]+80,swordPOS.y-helperPOS[1]+50,90,50);
-    if(project.collected){
-        project.collected = false;
     }
     checkCollisions(swordPOS.x-antiPOS[0],swordPOS.y-antiPOS[1],30,30);
     if(project.collected){

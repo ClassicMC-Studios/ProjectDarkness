@@ -168,6 +168,9 @@ function redraw(){
         generateTree();
         generateAnti();
         drawTxtBox();
+        if(project.triggerText){
+            text("Watch Out of the Antimatter",720/2-150,30);
+        }
         text("Score:"+project.score,10,30);
     }
     if(project.scene == -1){
@@ -254,7 +257,7 @@ document.addEventListener('keydown',function (evt){
             checkCollisions(swordPOS.x-helperPOS[0]+80,swordPOS.y-helperPOS[1]+50,90,50);
             if(project.collected){
                 project.collected = false;
-                alert("Test");
+                project.triggerText = true;
             }
         }
     }

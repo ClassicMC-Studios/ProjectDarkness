@@ -294,6 +294,9 @@ window.main = function (){
     checkCollisions(swordPOS.x-antiPOS[0],swordPOS.y-antiPOS[1],30,30);
     if(project.collected){
         project.collected = false;
+        swordPOS.x = 370;
+        swordPOS.y = 280;
+        project.scene = 0;
     }
 
 }

@@ -298,6 +298,27 @@ window.main = function (){
         swordPOS.y = 280;
         project.scene = 0;
     }
+    checkCollisions(swordPOS.x-antiPOS[2],swordPOS.y-antiPOS[3],30,30);
+    if(project.collected){
+        project.collected = false;
+        swordPOS.x = 370;
+        swordPOS.y = 280;
+        project.scene = 0;
+    }
+    checkCollisions(swordPOS.x-antiPOS[4],swordPOS.y-antiPOS[5],30,30);
+    if(project.collected){
+        project.collected = false;
+        swordPOS.x = 370;
+        swordPOS.y = 280;
+        project.scene = 0;
+    }
+    checkCollisions(swordPOS.x-antiPOS[6],swordPOS.y-antiPOS[7],30,30);
+    if(project.collected){
+        project.collected = false;
+        swordPOS.x = 370;
+        swordPOS.y = 280;
+        project.scene = 0;
+    }
 
 }
 main();

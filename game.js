@@ -169,7 +169,7 @@ function redraw(){
         generateAnti();
         drawTxtBox();
         if(project.triggerText){
-            text("Watch Out of the Antimatter",720/2-150,30);
+            text("Watch Out for theAntimatter",720/2-150,30);
         }
         text("Score:"+project.score,10,30);
     }

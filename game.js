@@ -40,6 +40,11 @@ class Anti{
         c.drawImage(images2.antimatter,swordPOS.x-x,swordPOS.y-y,30,30);
     }
 }
+class Coins{
+    constructor(x,y){
+        c.drawImage(images.coin,swordPOS.x-x,swordPOS.y-y,30,50);
+    }
+}
 function clear(){
     c.fillStyle = "black";
     c.fillRect(0,0,720,480);
@@ -170,6 +175,7 @@ function redraw(){
     if(project.scene == 1){
         clear();
         drawHBS();
+        new Coins(10,10);
         drawHelper(swordPOS.x-helperPOS[0],swordPOS.y-helperPOS[1]);
         drawPlayer(p.x,p.y);
         drawSword();
@@ -256,6 +262,7 @@ function inter(){
 document.addEventListener('keydown',function (evt){
     if(event.keyCode == 32){
         if(project.scene == 0){
+            project.time = 0
             project.scene = 1;
         }
         else if(project.scene == -1){

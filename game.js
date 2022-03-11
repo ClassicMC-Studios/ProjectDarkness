@@ -114,7 +114,7 @@ function drawHBS(){
 function text(text,x,y){
     c.globalAlpha = 0.3;
     c.fillStyle = "white";
-    c.font = 'bold 24px sans serif';
+    c.font = 'bold 24px Supermercado One';
     c.fillText(text,x,y);
     c.globalAlpha = 1;
 }

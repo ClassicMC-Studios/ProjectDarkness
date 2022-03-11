@@ -5,15 +5,23 @@ var titleIMG = document.getElementById("title");
 var images = {player:document.getElementById("player"),playerR:document.getElementById("playerR"),sword:document.getElementById("sword"),swordR:document.getElementById("swordR"),info:document.getElementById("info"),gbg:document.getElementById("gamebg"),coin:document.getElementById("coin"),light:document.getElementById("light"),lightC:document.getElementById("lightC")};
 var images2 = {help:document.getElementById("help"),tree:document.getElementById("tree"),
 antimatter:document.getElementById("antimatter")};
+var audio = new Audio('Sound/ProjectDarknessTest.wav');
 
 let p = {x:720/2-50,y:480/2-50,width:50,height:70};
 let swordPOS = {x:370,y:280,width:35,height:60};
 let project = {time:0,dir:"right",scene:0,swordActive:false,titleY:100,collected:false,
 helpX:300,helpY:300,triggerText:false,
-antiX:0,antiY:0,hitbox:false,amount:12,antiAmount:4,tX:190,tY:100,tYP:0.05,score:0};
+antiX:0,antiY:0,hitbox:false,amount:12,antiAmount:4,tX:190,tY:100,tYP:0.05,score:0,nextSound:0};
 const treePOS = [];
 const antiPOS = [];
 const helperPOS = [getRandomInt(800),getRandomInt(500)];
+let mu = setInterval(sound,2000);
+function sound(){
+    nextSound = getRandomInt(10);
+    if(nextSound == 4&& project.scene > 0){
+        audio.play();
+    }
+}
 
 let leftKeyPresed = false;
 let rightKeyPressed = false;
@@ -169,7 +177,7 @@ function redraw(){
         generateAnti();
         drawTxtBox();
         if(project.triggerText){
-            text("Watch Out for theAntimatter",720/2-150,30);
+            text("Watch Out for the Antimatter",720/2-150,30);
         }
         text("Score:"+project.score,10,30);
     }

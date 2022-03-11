@@ -5,6 +5,7 @@ var titleIMG = document.getElementById("title");
 var images = {player:document.getElementById("player"),playerR:document.getElementById("playerR"),sword:document.getElementById("sword"),swordR:document.getElementById("swordR"),info:document.getElementById("info"),gbg:document.getElementById("gamebg"),coin:document.getElementById("coin"),light:document.getElementById("light"),lightC:document.getElementById("lightC")};
 var images2 = {help:document.getElementById("help"),tree:document.getElementById("tree"),
 antimatter:document.getElementById("antimatter")};
+//Add test audio
 var audio = new Audio('Sound/ProjectDarknessTest.wav');
 
 let p = {x:720/2-50,y:480/2-50,width:50,height:70};

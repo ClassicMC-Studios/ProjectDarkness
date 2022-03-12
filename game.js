@@ -17,8 +17,8 @@ const treePOS = [];
 const antiPOS = [];
 const coinPOS = [getRandomInt(800),getRandomInt(500)];
 const helperPOS = [getRandomInt(800),getRandomInt(500)];
-const talkTypes = ["Watch Out for the Antimatter","The sword is useless","Where am I?","The world is gone."];
-const said = getRandomInt(4);
+const talkTypes = ["Watch Out for the Antimatter","The sword is useless","Where am I?","The world is gone.","Find all of the coins.","Nobody else is here","03122022"];
+let said = getRandomInt(7);
 let mu = setInterval(sound,2000);
 function sound(){
     nextSound = getRandomInt(10);
@@ -61,6 +61,17 @@ function clear(){
     c.drawImage(images.gbg,swordPOS.x-370-718,swordPOS.y-280-478,720,480);
     c.drawImage(images.gbg,swordPOS.x-370+719,swordPOS.y-280,720,480);
     c.drawImage(images.gbg,swordPOS.x-370+719,swordPOS.y-280-478,720,480);
+}
+function lvlReset(){
+    project.collected = false;
+    swordPOS.x = 370;
+    swordPOS.y = 280;
+    said = getRandomInt(7);
+    project.triggerText = false;
+    project.swordActive = false;
+    project.score = 0;
+    project.cc = false;
+    project.scene = 0;
 }
 function generateTree(){
     for (let step = 0; step < 2; step++) {
@@ -333,31 +344,19 @@ window.main = function (){
     }
     checkCollisions(swordPOS.x-antiPOS[0],swordPOS.y-antiPOS[1],30,30);
     if(project.collected){
-        project.collected = false;
-        swordPOS.x = 370;
-        swordPOS.y = 280;
-        project.scene = 0;
+        lvlReset();
     }
     checkCollisions(swordPOS.x-antiPOS[2],swordPOS.y-antiPOS[3],30,30);
     if(project.collected){
-        project.collected = false;
-        swordPOS.x = 370;
-        swordPOS.y = 280;
-        project.scene = 0;
+        lvlReset();
     }
     checkCollisions(swordPOS.x-antiPOS[4],swordPOS.y-antiPOS[5],30,30);
     if(project.collected){
-        project.collected = false;
-        swordPOS.x = 370;
-        swordPOS.y = 280;
-        project.scene = 0;
+        lvlReset();
     }
     checkCollisions(swordPOS.x-antiPOS[6],swordPOS.y-antiPOS[7],30,30);
     if(project.collected){
-        project.collected = false;
-        swordPOS.x = 370;
-        swordPOS.y = 280;
-        project.scene = 0;
+        lvlReset();
     }
 
 }

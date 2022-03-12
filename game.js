@@ -12,10 +12,13 @@ let p = {x:720/2-50,y:480/2-50,width:50,height:70};
 let swordPOS = {x:370,y:280,width:35,height:60};
 let project = {time:0,dir:"right",scene:0,swordActive:false,titleY:100,collected:false,
 helpX:300,helpY:300,triggerText:false,
-antiX:0,antiY:0,hitbox:false,amount:12,antiAmount:4,tX:190,tY:100,tYP:0.05,score:0,nextSound:0};
+antiX:0,antiY:0,hitbox:false,amount:12,antiAmount:4,tX:190,tY:100,tYP:0.05,score:0,nextSound:0,cc:false};
 const treePOS = [];
 const antiPOS = [];
+const coinPOS = [getRandomInt(800),getRandomInt(500)];
 const helperPOS = [getRandomInt(800),getRandomInt(500)];
+const talkTypes = ["Watch Out for the Antimatter","The sword is useless","Where am I?","The world is gone."];
+const said = getRandomInt(4);
 let mu = setInterval(sound,2000);
 function sound(){
     nextSound = getRandomInt(10);
@@ -103,6 +106,7 @@ function drawHBS(){
         drawHitbox(swordPOS.x,swordPOS.y,swordPOS.width,swordPOS.height);
         drawHitbox(p.x,p.y,p.width,p.height);
         drawHitbox(swordPOS.x-helperPOS[0]+80,swordPOS.y-helperPOS[1]+50,90,50);
+        drawHitbox(swordPOS.x-coinPOS[0]+3,swordPOS.y-coinPOS[1],25,45)
         //Anti hitboxes
         drawHitbox(swordPOS.x-antiPOS[0],swordPOS.y-antiPOS[1],30,30);
         drawHitbox(swordPOS.x-antiPOS[2],swordPOS.y-antiPOS[3],30,30);
@@ -115,6 +119,13 @@ function text(text,x,y){
     c.globalAlpha = 0.3;
     c.fillStyle = "white";
     c.font = 'bold 24px Supermercado One';
+    c.fillText(text,x,y);
+    c.globalAlpha = 1;
+}
+function textW(text,x,y){
+    c.globalAlpha = 0.3;
+    c.fillStyle = "white";
+    c.font = 'bold 12px Supermercado One';
     c.fillText(text,x,y);
     c.globalAlpha = 1;
 }
@@ -149,7 +160,7 @@ function drawSword(){
 function drawTitle(){
     c.drawImage(titleIMG,20,project.titleY-140,410,250);
     fontInit();
-    c.fillText("(c)ClassicMC 2022 ,\"i\"for info",545,470);
+    textW("(C)ClassicMC 2022 ,\"i\"for info",545,470);
 }
 function drawSL(type,x,y,w,h){
     c.globalAlpha = 0.3;
@@ -176,7 +187,9 @@ function redraw(){
     if(project.scene == 1){
         clear();
         drawHBS();
-        new Coins(10,10);
+        if(!project.cc){
+            new Coins(coinPOS[0],coinPOS[1]);
+        }
         drawHelper(swordPOS.x-helperPOS[0],swordPOS.y-helperPOS[1]);
         drawPlayer(p.x,p.y);
         drawSword();
@@ -184,7 +197,7 @@ function redraw(){
         generateAnti();
         drawTxtBox();
         if(project.triggerText){
-            text("Watch Out for the Antimatter",720/2-150,30);
+            text(talkTypes[said],720/2-150,30);
         }
         text("Score:"+project.score,10,30);
     }
@@ -311,6 +324,12 @@ window.main = function (){
     if(project.collected){
         project.collected = false;
         project.swordActive = true;
+    }
+    checkCollisions(swordPOS.x-coinPOS[0]+3,swordPOS.y-coinPOS[1],25,45);
+    if(project.collected){
+        project.collected = false;
+        if(!project.cc){project.score ++;}
+        project.cc = true;
     }
     checkCollisions(swordPOS.x-antiPOS[0],swordPOS.y-antiPOS[1],30,30);
     if(project.collected){

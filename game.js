@@ -112,6 +112,16 @@ function drawHitbox(x,y,w,h){
     c.fillStyle = "white";
     c.fillRect(x,y,w,h);
 }
+function drawSL(type,x,y,w,h){
+    c.globalAlpha = 0.3;
+    if(type == "rect"){
+        c.drawImage(images.light,x,y,50,480);
+    }
+    else{
+        c.drawImage(images.lightC,x,y,w,h);
+    }
+    c.globalAlpha = 1;
+}
 function drawHBS(){
     if(project.hitbox){
         c.globalAlpha = 0.3;
@@ -156,6 +166,7 @@ function fontInit(){
     c.fillStyle = "white";
     c.font = 'bold 12px sans serif';
 }
+
 function drawSword(){
     if(project.swordActive){
         if(project.dir == "right"){
@@ -174,14 +185,12 @@ function drawTitle(){
     fontInit();
     textW("(C)ClassicMC 2022 ,\"i\"for info",545,470);
 }
-function drawSL(type,x,y,w,h){
+function drawAntiSL(){
     c.globalAlpha = 0.3;
-    if(type == "rect"){
-        c.drawImage(images.light,x,y,50,480);
-    }
-    else{
-        c.drawImage(images.lightC,x,y,w,h);
-    }
+    c.drawImage(images.lightC,swordPOS.x-antiPOS[0]-10,swordPOS.y-antiPOS[1]-10,50,50);
+    c.drawImage(images.lightC,swordPOS.x-antiPOS[2]-10,swordPOS.y-antiPOS[3]-10,50,50);
+    c.drawImage(images.lightC,swordPOS.x-antiPOS[4]-10,swordPOS.y-antiPOS[5]-10,50,50);
+    c.drawImage(images.lightC,swordPOS.x-antiPOS[6]-10,swordPOS.y-antiPOS[7]-10,50,50);
     c.globalAlpha = 1;
 }
 function drawTree(x,y){
@@ -206,6 +215,7 @@ function redraw(){
         drawPlayer(p.x,p.y);
         drawSword();
         generateTree();
+        drawAntiSL();
         generateAnti();
         drawTxtBox();
         if(project.triggerText){

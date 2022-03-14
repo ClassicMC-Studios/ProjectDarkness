@@ -17,7 +17,7 @@ const treePOS = [];
 const antiPOS = [];
 let coinPOS = [getRandomInt(800),getRandomInt(500)];
 const helperPOS = [getRandomInt(800),getRandomInt(500)];
-const talkTypes = ["Watch Out for the Antimatter","The sword is useless","Where am I?","The world is gone.","Find all of the coins.","Nobody else is here","03122022"];
+const talkTypes = ["Watch Out for the Antimatter","The sword is useless","Where am I?","The world is gone.","Find all of the coins.","Nobody else is here","03142022"];
 let said = getRandomInt(7);
 let mu = setInterval(sound,2000);
 function sound(){
@@ -63,6 +63,7 @@ function clear(){
     c.drawImage(images.gbg,swordPOS.x-370+719,swordPOS.y-280-478,720,480);
 }
 function lvlReset(){
+    project.titleY = 100;
     project.collected = false;
     swordPOS.x = 370;
     swordPOS.y = 280;
@@ -298,7 +299,7 @@ document.addEventListener('keydown',function (evt){
             if(project.collected){
                 project.collected = false;
                 project.triggerText = false;
-                said = getRandomInt(7);
+                //said = getRandomInt(7);
                 project.triggerText = true;
                 redraw();
             }
@@ -367,6 +368,7 @@ window.main = function (){
     }
     else{
         project.triggerText = false;
+        said = getRandomInt(7);
     }
 
 }

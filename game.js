@@ -15,7 +15,7 @@ helpX:300,helpY:300,triggerText:false,
 antiX:0,antiY:0,hitbox:false,amount:12,antiAmount:4,tX:190,tY:100,tYP:0.05,score:0,nextSound:0,cc:false};
 const treePOS = [];
 const antiPOS = [];
-const coinPOS = [getRandomInt(800),getRandomInt(500)];
+let coinPOS = [getRandomInt(800),getRandomInt(500)];
 const helperPOS = [getRandomInt(800),getRandomInt(500)];
 const talkTypes = ["Watch Out for the Antimatter","The sword is useless","Where am I?","The world is gone.","Find all of the coins.","Nobody else is here","03122022"];
 let said = getRandomInt(7);
@@ -297,7 +297,10 @@ document.addEventListener('keydown',function (evt){
             checkCollisions(swordPOS.x-helperPOS[0]+80,swordPOS.y-helperPOS[1]+50,90,50);
             if(project.collected){
                 project.collected = false;
+                project.triggerText = false;
+                said = getRandomInt(7);
                 project.triggerText = true;
+                redraw();
             }
         }
     }
@@ -357,6 +360,13 @@ window.main = function (){
     checkCollisions(swordPOS.x-antiPOS[6],swordPOS.y-antiPOS[7],30,30);
     if(project.collected){
         lvlReset();
+    }
+    checkCollisions(swordPOS.x-helperPOS[0]+80,swordPOS.y-helperPOS[1]+50,90,50);
+    if(project.collected){
+        project.collected = false;
+    }
+    else{
+        project.triggerText = false;
     }
 
 }

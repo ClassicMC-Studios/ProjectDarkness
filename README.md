@@ -13,7 +13,7 @@
   </ul>
 </details>
 <details>
-  <summary>ScreenShots</summary>
+  <summary>ScreenShots (in progress)</summary>
   <img scr = "screenshots/busnes4.png" width = "360" height = "240">
   <p><em>&copy;ClassicMC</em></p>
 </details>

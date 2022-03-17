@@ -6,7 +6,7 @@
   <ul>
     <li>A game by, ClassicMC</li>
     <li>Made in Html Canvas and Js</li>
-    <li>&copy;ClassicMC-Studios 2022</li>
+    <li>Made by, ClassicMC-Studios</li>
     <ul>
       <li>Play online at <a href = "https://projectdarkness.w3spaces.com">projectdarkness.w3spaces.com (Old version)</a></li>
     </ul>

@@ -8,7 +8,7 @@
     <li>Made in Html Canvas and Js</li>
     <li>&copy;ClassicMC-Studios 2022</li>
     <ul>
-      <li>Play online at <a href = "https://projectdarkness.w3spaces.com">projectdarkness.w3spaces.com</a></li>
+      <li>Play online at <a href = "https://projectdarkness.w3spaces.com">projectdarkness.w3spaces.com (Old version)</a></li>
     </ul>
   </ul>
 </details>

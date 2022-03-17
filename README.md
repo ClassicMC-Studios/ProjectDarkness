@@ -14,6 +14,6 @@
 </details>
 <details>
   <summary>ScreenShots (in progress)</summary>
-  <img scr = "https://github.com/ClassicMC-Studios/ProjectDarkness/blob/main/screenshots/busnes5.png" width = "360" height = "240">
+  <img scr = "screenshots/busnes3.png" width = "360" height = "240">
   <p><em>&copy;ClassicMC</em></p>
 </details>

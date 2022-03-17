@@ -15,6 +15,7 @@ helpX:300,helpY:300,triggerText:false,
 antiX:0,antiY:0,hitbox:false,amount:12,antiAmount:4,tX:190,tY:100,tYP:0.05,score:0,nextSound:0,cc:false};
 const treePOS = [];
 const antiPOS = [];
+//let testArray = [1];
 let coinPOS = [getRandomInt(800),getRandomInt(500)];
 const helperPOS = [getRandomInt(800),getRandomInt(500)];
 const talkTypes = ["Watch Out for the Antimatter","The sword is useless","Where am I?","The world is gone.","Find all of the coins.","Nobody else is here","03172022"];
@@ -211,6 +212,11 @@ function redraw(){
         if(!project.cc){
             new Coins(coinPOS[0],coinPOS[1]);
         }
+        else{
+            coinPOS[0]=getRandomInt(800);
+            coinPOS[1]=getRandomInt(500);
+            project.cc = false;
+        }
         drawHelper(swordPOS.x-helperPOS[0],swordPOS.y-helperPOS[1]);
         drawPlayer(p.x,p.y);
         drawSword();
@@ -226,6 +232,7 @@ function redraw(){
     if(project.scene == -1){
         clear();
         c.drawImage(info,0,0,720,480);
+        drawSL("circle",-10,400,400,150);
     }
 }
 function checkCollisions(x,y,width,height){
@@ -325,8 +332,12 @@ document.addEventListener('keydown',function (evt){
             alert("TriggerText"+project.triggerText);
             alert(treePOS);
             alert(swordPOS.x+"XX  YY"+swordPOS.y);
+            //alert("TestArray:"+testArray[0]);
         }
     }
+    //if(event.keyCode == 49){
+        //testArray[0] = 2
+    //}
     if(event.keyCode == 68){
         if(!project.hitbox){
             project.hitbox = true;

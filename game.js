@@ -17,7 +17,7 @@ const treePOS = [];
 const antiPOS = [];
 let coinPOS = [getRandomInt(800),getRandomInt(500)];
 const helperPOS = [getRandomInt(800),getRandomInt(500)];
-const talkTypes = ["Watch Out for the Antimatter","The sword is useless","Where am I?","The world is gone.","Find all of the coins.","Nobody else is here","03142022"];
+const talkTypes = ["Watch Out for the Antimatter","The sword is useless","Where am I?","The world is gone.","Find all of the coins.","Nobody else is here","03172022"];
 let said = getRandomInt(7);
 let mu = setInterval(sound,2000);
 function sound(){

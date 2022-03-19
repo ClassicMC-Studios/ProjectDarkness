@@ -6,25 +6,39 @@ var images = {player:document.getElementById("player"),playerR:document.getEleme
 var images2 = {help:document.getElementById("help"),tree:document.getElementById("tree"),
 antimatter:document.getElementById("antimatter")};
 //Add test audio
-var audio = new Audio('Sound/ProjectDarknessTest.wav');
+var audio = new Audio('Sound/puddles.wav');
+var audio2 = new Audio('Sound/the Square Root of happiness .wav');
 
 let p = {x:720/2-50,y:480/2-50,width:50,height:70};
 let swordPOS = {x:370,y:280,width:35,height:60};
 let project = {time:0,dir:"right",scene:0,swordActive:false,titleY:100,collected:false,
 helpX:300,helpY:300,triggerText:false,
 antiX:0,antiY:0,hitbox:false,amount:12,antiAmount:4,tX:190,tY:100,tYP:0.05,score:0,nextSound:0,cc:false};
+//Desegnate the arrays of numbers and positions
 const treePOS = [];
 const antiPOS = [];
 
 let coinPOS = [getRandomInt(800),getRandomInt(500)];
 const helperPOS = [getRandomInt(800),getRandomInt(500)];
-const talkTypes = ["Watch Out for the Antimatter","The sword is useless","Where am I?","The world is gone.","Find all of the coins.","Nobody else is here","03172022"];
+const talkTypes = ["Watch Out for the Antimatter","The sword is useless","Where am I?","The world is gone.","Find all of the coins.","Nobody else is here","03192022"];
+//To say (helper) and interval for sound testing
 let said = getRandomInt(7);
 let mu = setInterval(sound,2000);
+//Ran on interval to start sound if a random number equals 10
 function sound(){
     nextSound = getRandomInt(10);
     if(nextSound == 4&& project.scene > 0){
-        audio.play();
+        nextSound = getRandomInt(2);
+        if(nextSound == 1){
+            if(audio.paused){
+                audio2.play();
+            }
+        }
+        else{
+            if(audio2.paused){
+                audio.play();
+            }
+        }
     }
 }
 
@@ -47,7 +61,9 @@ class Anti{
 }
 class Coins{
     constructor(x,y){
+        c.filter = "brightness(150%)";
         c.drawImage(images.coin,swordPOS.x-x,swordPOS.y-y,30,50);
+        c.filter = 'none';
     }
 }
 function clear(){
@@ -326,6 +342,7 @@ document.addEventListener('keydown',function (evt){
             project.scene = -1;
         }
         else{
+            alert(audio.paused+"audio  audio2"+audio2.paused)
             alert(p.x+"<X Y>"+p.y);
             alert(project.helpX+" "+project.helpY);
             alert("TriggerText"+project.triggerText);

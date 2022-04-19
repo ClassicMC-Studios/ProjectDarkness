@@ -1,5 +1,5 @@
 # ProjectDarkness<br/>
-<!--![screenshot](screenshots/infoPAGE.png)<br/>-->
+<!--![screenshot](screenshots/infoPAGE.png)<br/>--> 
 <img src = "screenshots/infoPAGE.png" width = "360" height = "240">
 <details>
   <summary>Main Info</summary>
